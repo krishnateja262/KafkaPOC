@@ -1,5 +1,6 @@
 package com.teja.queue;
 
+import com.teja.models.DoubleLinkedList;
 import com.teja.models.Message;
 
 import java.util.Optional;
@@ -28,14 +29,14 @@ public class ConcurrentQueue {
         }
     }
 
-    public Optional<Message> fetch() {
-        Optional<Message> response;
+    public Optional<DoubleLinkedList> fetchNextNode(DoubleLinkedList doubleLinkedList) {
+        Optional<DoubleLinkedList> response;
         try {
             lock.lock();
-            while (simpleQueue.size == 0L) {
+            while (simpleQueue.getSize() == 0L) {
                 queueEmptyCondition.await();
             }
-            response = simpleQueue.remove();
+            response = simpleQueue.nextMessage(doubleLinkedList);
         } catch (InterruptedException e) {
             e.printStackTrace();
             response = Optional.empty();

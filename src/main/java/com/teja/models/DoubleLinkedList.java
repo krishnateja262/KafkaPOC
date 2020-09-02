@@ -1,7 +1,8 @@
-package com.teja.queue;
+package com.teja.models;
 
-import com.teja.models.Message;
+import lombok.Data;
 
+@Data
 public class DoubleLinkedList {
     Message message;
     DoubleLinkedList next;
